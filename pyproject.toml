@@ -1,0 +1,108 @@
+[project]
+name = "palimpsest"
+version = "0.1.0"
+description = "Science of Science — analyzing scholarly metadata, citation networks, and research dynamics"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.28",
+    "networkx>=3.4",
+    "pandas>=2.2",
+    "pydantic>=2.10",
+    "pydantic-settings>=2.7",
+    "pyalex>=0.16",
+    "diskcache>=5.6",
+    "pyarrow>=23.0.0",
+    "matplotlib>=3.10.8",
+    "seaborn>=0.13.2",
+    "scipy>=1.17.0",
+    "statsmodels>=0.14.6",
+    "duckdb>=1.4.4",
+    "neo4j>=6.1.0",
+    "fastapi>=0.129.0",
+    "uvicorn>=0.40.0",
+    "slowapi>=0.1.9",
+    "scikit-learn>=1.8.0",
+]
+
+[project.optional-dependencies]
+nlp = [
+    "scikit-learn>=1.6",
+    "sentence-transformers>=3.4",
+]
+viz = [
+    "matplotlib>=3.10",
+    "seaborn>=0.13",
+    "plotly>=6.0",
+]
+all = ["research[nlp,viz]"]
+
+[build-system]
+requires = ["uv_build>=0.9.18,<0.10.0"]
+build-backend = "uv_build"
+
+# ── Ruff ──────────────────────────────────────────────────────
+[tool.ruff]
+target-version = "py312"
+line-length = 88
+indent-width = 4
+
+[tool.ruff.lint]
+select = [
+    "E4", "E7", "E9",  # pycodestyle
+    "F",                # pyflakes
+    "B",                # flake8-bugbear
+    "I",                # isort
+    "UP",               # pyupgrade
+    "SIM",              # flake8-simplify
+    "N",                # pep8-naming
+    "RUF",              # ruff-specific
+]
+ignore = ["E501"]  # line length handled by formatter
+
+[tool.ruff.lint.isort]
+known-first-party = ["research"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # unused imports OK in __init__
+"tests/**" = ["B011", "SIM300"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+docstring-code-format = true
+
+# ── Mypy ──────────────────────────────────────────────────────
+[tool.mypy]
+python_version = "3.12"
+strict = false
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+check_untyped_defs = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["pyalex.*", "diskcache.*", "networkx.*", "slowapi.*"]
+ignore_missing_imports = true
+
+# ── Pytest ────────────────────────────────────────────────────
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-ra --strict-markers"
+markers = [
+    "slow: marks tests that process large datasets (deselect with '-m \"not slow\"')",
+    "integration: marks tests that hit external APIs",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.19.1",
+    "pandas-stubs>=3.0.0.260204",
+    "playwright>=1.58.0",
+    "pytest>=9.0.2",
+    "ruff>=0.15.1",
+]

@@ -1,0 +1,71 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Data (too large / contains API responses; only documentation files allowed)
+data/*
+!data/AGENTS.md
+!data/README.md
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# Frontend
+frontend/node_modules/
+# Note: frontend/dist/ is rebuilt on every deploy (vite build); kept out of git
+frontend/dist/
+frontend/.vite/
+
+# Generated PDF outputs (manuscripts are rebuilt from .md)
+docs/submissions/*/build/
+docs/submissions/track3_pnas/manuscript.pdf
+docs/submissions/track3_pnas/si_appendix.pdf
+docs/submissions/track3_pnas/cover_letter.pdf
+docs/submissions/track1_nhb/manuscript.pdf
+docs/submissions/track1_nhb/cover_letter.pdf
+docs/submissions/track2_note/manuscript.pdf
+
+# Heavy local logs and tmp
+tmp/
+*.log
+*.png
+!docs/**/*.png
+!frontend/**/*.png
+
+# Neo4j bulk-import CSVs (too large for git — regenerate from scripts/)
+data/processed/neo4j_csv/
+data/neo4j/
+
+# Planning scratch
+PLAN.md
+
+# Claude Code / OMC local config (per-developer, not part of project)
+.claude/
+.omc/
+.mcp.json

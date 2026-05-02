@@ -1,0 +1,40 @@
+name: Deploy API to Production
+
+on:
+  workflow_run:
+    workflows: ["Build Docker image"]
+    types: [completed]
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy via SSH to server
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          script: |
+            set -e
+            cd ${{ secrets.DEPLOY_PATH }}
+            git fetch --all
+            git reset --hard origin/${{ github.event.workflow_run.head_branch || 'main' }}
+            # Pull latest Docker image and restart service
+            docker pull ghcr.io/${{ github.repository }}/palimpsest-api:latest || true
+            # If using docker-compose
+            docker compose pull palimpsest-api 2>/dev/null || true
+            docker compose up -d palimpsest-api 2>/dev/null || true
+            # If using systemd directly
+            sudo systemctl restart palimpsest-api 2>/dev/null || true
+            # Verify
+            sleep 5
+            curl -sf http://127.0.0.1:8300/api/health || exit 1
+            echo "Deployment successful."

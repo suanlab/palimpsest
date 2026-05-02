@@ -1,0 +1,23 @@
+[Unit]
+Description=Palimpsest API Server
+After=network-online.target docker.service
+Wants=network-online.target docker.service
+# Wait for Neo4j Docker container to be ready (best-effort)
+Requires=docker.service
+
+[Service]
+Type=simple
+User=suan
+Group=suan
+WorkingDirectory=/home/suan/Projects/research
+Environment=PATH=/home/suan/.local/bin:/usr/local/bin:/usr/bin:/bin
+EnvironmentFile=-/home/suan/Projects/research/.env
+ExecStart=/home/suan/.local/bin/uv run python scripts/run_api.py --host 0.0.0.0 --port 8300
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=palimpsest-api
+
+[Install]
+WantedBy=multi-user.target

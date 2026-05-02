@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  neo4j:
+    image: neo4j:5-community
+    container_name: scigraph-neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=${NEO4J_AUTH:-neo4j/research2026}
+      - NEO4J_server_memory_heap_initial__size=2G
+      - NEO4J_server_memory_heap_max__size=4G
+      - NEO4J_server_memory_pagecache_size=4G
+    volumes:
+      - neo4j-data:/data
+      - neo4j-logs:/logs
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:7474"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  palimpsest-api:
+    image: ghcr.io/suanlab/palimpsest/palimpsest-api:latest
+    container_name: palimpsest-api
+    restart: unless-stopped
+    ports:
+      - "8300:8300"
+    environment:
+      - RESEARCH_NEO4J_URI=bolt://neo4j:7687
+      - RESEARCH_NEO4J_USER=neo4j
+      - RESEARCH_NEO4J_PASSWORD=${NEO4J_PASSWORD:-research2026}
+      - RESEARCH_CORS_ORIGINS=${CORS_ORIGINS:-https://suanlab.github.io}
+    depends_on:
+      neo4j:
+        condition: service_healthy
+
+volumes:
+  neo4j-data:
+  neo4j-logs:
+
+networks:
+  default:
+    name: scigraph-network

@@ -1,0 +1,124 @@
+
+============================================================
+  Track 1 (NHB): AI Adoption Statistics
+============================================================
+  ✅ Computer Science early avg: paper=17.58, data=17.58
+  ✅ Computer Science recent avg: paper=22.17, data=22.17
+  ✅ Computer Science absolute change: paper=4.59, data=4.59
+  ✅ Computer Science fold increase: paper=1.26, data=1.26
+  ✅ Biology early avg: paper=6.51, data=6.51
+  ✅ Biology recent avg: paper=8.97, data=8.97
+  ✅ Biology absolute change: paper=2.46, data=2.46
+  ✅ Biology fold increase: paper=1.38, data=1.38
+  ✅ Geology early avg: paper=5.72, data=5.72
+  ✅ Geology recent avg: paper=7.57, data=7.57
+  ✅ Geology absolute change: paper=1.85, data=1.85
+  ✅ Geology fold increase: paper=1.32, data=1.32
+  ✅ Medicine early avg: paper=3.06, data=3.06
+  ✅ Medicine recent avg: paper=3.99, data=3.99
+  ✅ Medicine absolute change: paper=0.93, data=0.93
+  ✅ Medicine fold increase: paper=1.3, data=1.3
+  ✅ Environmental Science early avg: paper=3.02, data=3.02
+  ✅ Environmental Science recent avg: paper=3.49, data=3.49
+  ✅ Environmental Science absolute change: paper=0.47, data=0.47
+  ✅ Environmental Science fold increase: paper=1.16, data=1.16
+  ✅ Materials Science early avg: paper=4.14, data=4.14
+  ✅ Materials Science recent avg: paper=4.38, data=4.38
+  ✅ Materials Science absolute change: paper=0.24, data=0.24
+  ✅ Materials Science fold increase: paper=1.06, data=1.06
+
+============================================================
+  Track 1 (NHB): Panel Dimensions
+============================================================
+  ✅ N fields: paper=15, data=15
+  ✅ N rows (375 = 15 × 25): paper=375, data=375
+
+============================================================
+  Track 1 (NHB): S-Curve Parameters
+============================================================
+  ✅ Computer Science K: paper=0.556, data=0.556
+  ✅ Computer Science r: paper=0.037, data=0.037
+  ✅ Biology K: paper=0.26, data=0.26
+  ✅ Biology r: paper=0.054, data=0.054
+  ✅ Mathematics K: paper=0.476, data=0.476
+  ✅ Mathematics r: paper=0.013, data=0.013
+  ✅ Engineering K: paper=0.326, data=0.326
+  ✅ Engineering r: paper=0.012, data=0.012
+  ✅ Environmental Science K: paper=0.081, data=0.081
+  ✅ Environmental Science r: paper=0.025, data=0.025
+  ✅ Medicine K: paper=0.103, data=0.103
+  ✅ Medicine r: paper=0.042, data=0.042
+  ✅ Materials Science K: paper=0.093, data=0.093
+  ✅ Materials Science r: paper=0.01, data=0.01
+
+============================================================
+  Track 3 (PNAS): Pre/Post Distribution
+============================================================
+  ✅ Total citations: paper=220112, data=220112
+  ✅ Post-retraction count: paper=200036, data=200036
+  ✅ Same-year count: paper=17525, data=17525
+  ✅ Pre-retraction count: paper=2551, data=2551
+  ✅ Post-retraction %: paper=90.88, data=90.88
+
+============================================================
+  Track 3 (PNAS): Citation Persistence Curve
+============================================================
+  ✅ Citations at +1y: paper=43793, data=43793
+  ✅ Citations at +2y: paper=38653, data=38653
+  ✅ Citations at +3y: paper=29480, data=29480
+  ✅ Citations at +4y: paper=21029, data=21029
+  ✅ Citations at +5y: paper=14736, data=14736
+  ✅ Citations at +6y: paper=10994, data=10994
+  ✅ Citations at +7y: paper=8423, data=8423
+  ✅ Citations at +8y: paper=6669, data=6669
+  ✅ Citations at +9y: paper=5403, data=5403
+  ✅ Citations at +10y: paper=4257, data=4257
+  ✅ Citations at +15y: paper=1432, data=1432
+
+============================================================
+  Track 3 (PNAS): Field-Level Contamination
+============================================================
+  ✅ Engineering post-retraction citations: paper=36620, data=36620
+  ✅ Medicine post-retraction citations: paper=34245, data=34245
+  ✅ Biochemistry, Genetics and Molecular Biology post-retraction citations: paper=24646, data=24646
+  ✅ Computer Science post-retraction citations: paper=20622, data=20622
+  ✅ Materials Science post-retraction citations: paper=14254, data=14254
+
+============================================================
+  Track 3 (PNAS): Zombie Papers
+============================================================
+  ✅ Zombie 'Primary Prevention of Cardiovascula...' post-retraction citations: paper=1740, data=1740
+  ✅ Zombie 'RETRACTED: Recent progress in proce...' post-retraction citations: paper=1293, data=1293
+  ✅ Zombie 'RETRACTED ARTICLE: A universal prin...' post-retraction citations: paper=922, data=922
+  ✅ Zombie 'Absorptive Capacity, Environmental ...' post-retraction citations: paper=723, data=723
+
+============================================================
+  Cross-Paper: Extended Data Table 9 (Track 1) vs Table 5 Part B (Track 3)
+============================================================
+
+============================================================
+  Track 3 (PNAS): Extended Data Table 5 Part A Rates
+============================================================
+  ✅ Materials Science PRC rate/M: paper=1980.9, data=1980.9
+  ✅ Biochemistry, Genetics and Molecular Biology PRC rate/M: paper=1788.5, data=1788.5
+  ✅ Computer Science PRC rate/M: paper=1196.4, data=1196.4
+  ✅ Engineering PRC rate/M: paper=1161.4, data=1161.4
+  ✅ Medicine PRC rate/M: paper=1034.0, data=1034.0
+
+============================================================
+  FLAGGED ISSUES (require author review)
+============================================================
+  ⚠️ Track 3 labeling: Abstract and Section 3.4 cite 'retraction rates per million' (1,788/M, 1,196/M) but these are POST-RETRACTION CITATION rates, not retraction rates. Actual retraction rates are ~596/M and ~579/M. Consider clarifying terminology.
+  ⚠️ Track 3 citation gap: Methods 4.1 reports 457,101 total citations (sum of cited_by_count) but pre/post analysis covers 220,112 citations (actual graph edges). Gap of ~237K is expected (cited_by_count metadata ≠ stored edges) but should be explained.
+  ⚠️ Track 1 refs 19-29: References 19-29 (formerly 20-30) do not appear as in-text superscript citations. They may be cited in Extended Data or figures — verify these are all needed.
+  ⚠️ Database totals: Key corpus numbers (360,515,260 works; 86,009,932 authors; 1,075,178,792 citations; 845,284 title-based AI; 4,415,572 concept-based AI; 45,361 retractions) come from direct Neo4j queries and are not stored in JSON files. They were verified against the platform API in previous sessions.
+
+============================================================
+  VERIFICATION SUMMARY
+============================================================
+
+  ✅ Passed: 70
+  ❌ Failed: 0
+  ⚠️ Warnings: 4
+
+  All verifiable statistics are internally consistent.

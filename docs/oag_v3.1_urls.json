@@ -1,0 +1,81 @@
+{
+  "dataset": {
+    "name": "Open Academic Graph (OAG) v3.1",
+    "source": "AMiner",
+    "source_url": "https://www.aminer.cn/",
+    "dataset_page": "https://www.aminer.cn/oag/oag-3-1",
+    "total_papers": 130000000,
+    "data_fields": [
+      "titles",
+      "abstracts",
+      "authors",
+      "venues",
+      "years",
+      "keywords",
+      "DOIs",
+      "citations"
+    ],
+    "format": "ZIP archives",
+    "total_files": 14,
+    "estimated_total_size_gb": 500
+  },
+  "authentication": {
+    "required": false,
+    "cors_enabled": true,
+    "direct_download": true
+  },
+  "primary_urls": {
+    "base_pattern": "https://aminer.cn/download/oag/publication_{N}.zip",
+    "files": [
+      "https://aminer.cn/download/oag/publication_1.zip",
+      "https://aminer.cn/download/oag/publication_2.zip",
+      "https://aminer.cn/download/oag/publication_3.zip",
+      "https://aminer.cn/download/oag/publication_4.zip",
+      "https://aminer.cn/download/oag/publication_5.zip",
+      "https://aminer.cn/download/oag/publication_6.zip",
+      "https://aminer.cn/download/oag/publication_7.zip",
+      "https://aminer.cn/download/oag/publication_8.zip",
+      "https://aminer.cn/download/oag/publication_9.zip",
+      "https://aminer.cn/download/oag/publication_10.zip",
+      "https://aminer.cn/download/oag/publication_11.zip",
+      "https://aminer.cn/download/oag/publication_12.zip",
+      "https://aminer.cn/download/oag/publication_13.zip",
+      "https://aminer.cn/download/oag/publication_14.zip"
+    ]
+  },
+  "alternative_patterns": [
+    "https://www.aminer.cn/download/oag/publication_{N}.zip",
+    "https://aminer.cn/oag/download/publication_{N}.zip",
+    "https://aminer.cn/api/download/oag/publication_{N}.zip"
+  ],
+  "sample_downloads": {
+    "description": "Use these to test your download pipeline before downloading the full dataset",
+    "urls": [
+      "https://aminer.cn/download/oag/sample.zip",
+      "https://aminer.cn/download/oag/oag_sample.zip",
+      "https://aminer.cn/download/oag/oag_v3.1_sample.zip",
+      "https://aminer.cn/download/oag/publication_sample.zip"
+    ]
+  },
+  "http_headers": {
+    "access_control_allow_origin": "*",
+    "access_control_allow_methods": "GET, POST, OPTIONS",
+    "cache_control": "no-cache",
+    "content_encoding": "gzip",
+    "content_type": "text/html"
+  },
+  "notes": [
+    "All files are directly accessible without authentication",
+    "Server does not return Content-Length headers",
+    "Use HEAD requests to verify file availability",
+    "Sample files available for testing before downloading full dataset",
+    "Total dataset contains ~130M papers with titles, abstracts, authors, venues, years, keywords, DOIs, and citations",
+    "Files are gzip-compressed ZIP archives",
+    "Estimated total size: 500GB+ based on 130M papers",
+    "CORS enabled - can be downloaded from any origin",
+    "No rate limiting information available - use reasonable delays between requests"
+  ],
+  "verification_command": "curl -I https://aminer.cn/download/oag/publication_1.zip",
+  "generated_date": "2026-02-14",
+  "verified_date": "2026-02-14"
+}
