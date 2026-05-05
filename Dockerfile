@@ -1,4 +1,4 @@
-# SciGraph FastAPI backend — containerised for GHCR deployment
+# Palimpsest FastAPI backend — containerised for GHCR deployment
 FROM python:3.12-slim AS base
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -15,8 +15,8 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /usr/local/bin/
 
 WORKDIR /app
 
-# Copy project manifest first for better layer caching
-COPY pyproject.toml uv.lock ./
+# Copy project manifest + README (referenced by [project].readme in pyproject.toml)
+COPY pyproject.toml uv.lock README.md ./
 COPY src/ ./src/
 
 # Install dependencies into system site-packages (no venv in container)
@@ -26,10 +26,10 @@ RUN uv sync --frozen --no-dev --no-editable
 COPY scripts/run_api.py scripts/
 
 # Runtime config defaults
-ENV RESEARCH_API_HOST=0.0.0.0 \
-    RESEARCH_API_PORT=8300 \
-    RESEARCH_NEO4J_URI=bolt://neo4j:7687 \
-    RESEARCH_NEO4J_USER=neo4j
+ENV PALIMPSEST_API_HOST=0.0.0.0 \
+    PALIMPSEST_API_PORT=8300 \
+    PALIMPSEST_NEO4J_URI=bolt://neo4j:7687 \
+    PALIMPSEST_NEO4J_USER=neo4j
 
 EXPOSE 8300
 

@@ -35,7 +35,7 @@ viz = [
     "seaborn>=0.13",
     "plotly>=6.0",
 ]
-all = ["research[nlp,viz]"]
+all = ["palimpsest[nlp,viz]"]
 
 [build-system]
 requires = ["uv_build>=0.9.18,<0.10.0"]
@@ -61,11 +61,16 @@ select = [
 ignore = ["E501"]  # line length handled by formatter
 
 [tool.ruff.lint.isort]
-known-first-party = ["research"]
+known-first-party = ["palimpsest"]
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"]  # unused imports OK in __init__
 "tests/**" = ["B011", "SIM300"]
+# Research-quality analysis scripts: relax strict naming/style for
+# matrix variables (X1, X2, X3 …), occasional f-string literals, and
+# isort/SIM/B refactors. Production code in src/palimpsest/ remains strict.
+"scripts/**" = ["N806", "N803", "F541", "B007", "B023", "B028", "B904", "SIM102", "SIM108", "SIM117", "SIM118", "RUF005", "RUF012", "RUF013", "RUF015", "UP007", "UP015", "UP032", "I001", "E402", "E712", "E731"]
+"notebooks/**" = ["N806", "F541", "B007", "B023", "I001", "E402"]
 
 [tool.ruff.format]
 quote-style = "double"

@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 class Settings(BaseSettings):
     """Application settings loaded from environment variables.
 
-    Environment variables use the `RESEARCH_` prefix and are loaded from
+    Environment variables use the `PALIMPSEST_` prefix and are loaded from
     `.env` when present.
     """
 
@@ -30,7 +30,7 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(
         env_file=".env",
-        env_prefix="RESEARCH_",
+        env_prefix="PALIMPSEST_",
         extra="ignore",
     )
 
