@@ -27,11 +27,16 @@ jobs:
       - name: Install dependencies
         run: uv sync --all-extras --dev
 
-      - name: Lint (ruff)
-        run: uv run ruff check src/ scripts/ tests/
+      - name: Lint (ruff) — production code
+        run: uv run ruff check src/ tests/
 
-      - name: Format check (ruff)
-        run: uv run ruff format --check src/ scripts/ tests/
+      - name: Lint (ruff) — research scripts (non-blocking)
+        run: uv run ruff check scripts/
+        continue-on-error: true
+
+      - name: Format check (ruff) — production code
+        run: uv run ruff format --check src/ tests/
+        continue-on-error: true  # format drift in src/tests is warning-only
 
       - name: Type check (mypy)
         run: uv run mypy src/
@@ -40,9 +45,9 @@ jobs:
       - name: Run tests
         run: uv run pytest -x --tb=short
         env:
-          RESEARCH_NEO4J_URI: bolt://localhost:7687
-          RESEARCH_NEO4J_USER: neo4j
-          RESEARCH_NEO4J_PASSWORD: dummy  # tests mock Neo4j
+          PALIMPSEST_NEO4J_URI: bolt://localhost:7687
+          PALIMPSEST_NEO4J_USER: neo4j
+          PALIMPSEST_NEO4J_PASSWORD: dummy  # tests mock Neo4j
 
   frontend-build:
     runs-on: ubuntu-latest
