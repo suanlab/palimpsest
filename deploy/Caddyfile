@@ -1,0 +1,45 @@
+# Palimpsest API — Caddy reverse proxy with auto-HTTPS via Let's Encrypt.
+#
+# Install (Ubuntu 22.04+):
+#   sudo apt install -y debian-keyring debian-archive-keyring apt-transport-https
+#   curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
+#   curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | sudo tee /etc/apt/sources.list.d/caddy-stable.list
+#   sudo apt update && sudo apt install -y caddy
+#
+# Deploy this file:
+#   sudo cp deploy/Caddyfile /etc/caddy/Caddyfile
+#   sudo systemctl restart caddy
+#
+# Required: router port-forwarding 80 + 443 → this host's LAN IP.
+# DNS: api.suanlab.com A record → public WAN IP (already configured).
+
+api.suanlab.com {
+    # Reverse proxy to local FastAPI on port 8300
+    reverse_proxy localhost:8300
+
+    # Allow CORS preflight from the GitHub Pages frontend.
+    # FastAPI already sets CORS headers; Caddy passes them through.
+    # No additional header manipulation needed.
+
+    # Sensible request log (stderr → journald)
+    log {
+        output stderr
+        format console
+        level INFO
+    }
+
+    # Compression for JSON responses
+    encode gzip zstd
+
+    # Reasonable timeouts for graph queries
+    request_body {
+        max_size 10MB
+    }
+}
+
+# Optional: redirect bare suanlab.com/api → api.suanlab.com (for typo-resilience).
+# Uncomment if desired.
+#
+# suanlab.com/api/* {
+#     redir https://api.suanlab.com{uri} 308
+# }
