@@ -38,7 +38,7 @@ jobs:
       - name: Build static frontend
         env:
           # Frontend reads VITE_API_URL (see frontend/src/api/graphApi.ts)
-          VITE_API_URL: ${{ vars.PUBLIC_API_URL || 'https://api.suanlab.com' }}
+          VITE_API_URL: ${{ vars.PUBLIC_API_URL || 'https://scigraph.suanlab.com' }}
           VITE_API_KEY: ${{ secrets.PUBLIC_API_KEY || '' }}
           # GitHub Pages serves under /<repo>/ — let the build know.
           VITE_BASE: /${{ github.event.repository.name }}/

@@ -11,9 +11,9 @@
 #   sudo systemctl restart caddy
 #
 # Required: router port-forwarding 80 + 443 → this host's LAN IP.
-# DNS: api.suanlab.com A record → public WAN IP (already configured).
+# DNS: scigraph.suanlab.com A record → public WAN IP (already configured).
 
-api.suanlab.com {
+scigraph.suanlab.com {
     # Reverse proxy to local FastAPI on port 8300
     reverse_proxy localhost:8300
 
@@ -37,9 +37,9 @@ api.suanlab.com {
     }
 }
 
-# Optional: redirect bare suanlab.com/api → api.suanlab.com (for typo-resilience).
+# Optional: redirect bare suanlab.com/api → scigraph.suanlab.com (for typo-resilience).
 # Uncomment if desired.
 #
 # suanlab.com/api/* {
-#     redir https://api.suanlab.com{uri} 308
+#     redir https://scigraph.suanlab.com{uri} 308
 # }

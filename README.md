@@ -8,7 +8,7 @@ Python research toolkit + React frontend + Neo4j graph database for analyzing sc
 
 **Live services:**
 - Frontend (static): GitHub Pages — `https://suanlab.github.io/palimpsest/`
-- API: `https://api.suanlab.com/` (FastAPI + Neo4j)
+- API: `https://scigraph.suanlab.com/` (FastAPI + Neo4j)
 - Interactive exploration: `https://suanlab.github.io/palimpsest/` (queries live API)
 
 Active research outputs:
@@ -200,7 +200,7 @@ curl http://127.0.0.1:8300/api/health
 
 ### Production CORS configuration
 
-When the frontend is served from GitHub Pages while the API runs on a separate origin (e.g. `api.suanlab.com`), the API must explicitly list the Pages origin in `RESEARCH_CORS_ORIGINS`. The default `"*"` does **not** work because the API uses `allow_credentials=True`. Example:
+When the frontend is served from GitHub Pages while the API runs on a separate origin (e.g. `scigraph.suanlab.com`), the API must explicitly list the Pages origin in `RESEARCH_CORS_ORIGINS`. The default `"*"` does **not** work because the API uses `allow_credentials=True`. Example:
 
 ```bash
 RESEARCH_CORS_ORIGINS=https://suanlab.github.io,http://localhost:3000
@@ -230,7 +230,7 @@ Required GitHub variable (not secret):
 
 | Variable | Description |
 |---|---|
-| `PUBLIC_API_BASE_URL` | Public API URL used by Pages frontend (default `https://api.suanlab.com`) |
+| `PUBLIC_API_BASE_URL` | Public API URL used by Pages frontend (default `https://scigraph.suanlab.com`) |
 
 ---
 
