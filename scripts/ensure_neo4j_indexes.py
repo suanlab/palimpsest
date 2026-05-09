@@ -32,6 +32,14 @@ INDEX_DEFS = [
     ("field_field_id", "Field", "field_id"),
 ]
 
+# Fulltext indexes used by /api/search/* endpoints.
+# Note: paper_title_fulltext is the historical name of the title index
+# (created during initial bulk import); the search code calls it directly.
+FULLTEXT_INDEX_DEFS = [
+    ("paper_title_fulltext", "Paper", "title"),
+    ("author_name_ft", "Author", "author_name"),
+]
+
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
@@ -69,6 +77,15 @@ def main() -> int:
             )
             session.run(cypher).consume()
             print(f"  - {name} on :{label}({prop})")
+
+        print("Ensuring fulltext indexes exist...")
+        for name, label, prop in FULLTEXT_INDEX_DEFS:
+            cypher = (
+                f"CREATE FULLTEXT INDEX {name} IF NOT EXISTS "
+                f"FOR (n:{label}) ON EACH [n.{prop}]"
+            )
+            session.run(cypher).consume()
+            print(f"  - {name} (FULLTEXT) on :{label}({prop})")
 
         if not args.wait:
             print("\nIndexes issued. Population is asynchronous.")

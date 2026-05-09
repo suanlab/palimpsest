@@ -107,7 +107,7 @@ def search_papers(
 
     cypher: LiteralString = cast(
         LiteralString,
-        "CALL db.index.fulltext.queryNodes('paper_title_ft', $q) "
+        "CALL db.index.fulltext.queryNodes('paper_title_fulltext', $q) "
         "YIELD node AS p, score "
         + field_match
         + "WITH p, score "
@@ -263,7 +263,7 @@ def autocomplete(
 
     # Query paper titles
     paper_cypher: LiteralString = (
-        "CALL db.index.fulltext.queryNodes('paper_title_ft', $q, "
+        "CALL db.index.fulltext.queryNodes('paper_title_fulltext', $q, "
         "{limit: $limit}) "
         "YIELD node AS p, score "
         "WITH p, score "
