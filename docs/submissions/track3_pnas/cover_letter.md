@@ -67,7 +67,7 @@ The work is methodologically rigorous (matched-control design plus stepwise stra
 
 ## Data and Reproducibility
 
-All primary data sources are openly available: Retraction Watch (68,870 records) and OpenAlex (479M works). The full Neo4j graph, bulk-import CSVs, classifier-validation tables, sensitivity analyses, ML-classifier weights, and a reproducing Jupyter notebook will be deposited with the manuscript. The companion code repository is at https://github.com/suanlab/palimpsest; an interactive graph-exploration platform (SciGraph Explorer) is hosted at http://suan.iptime.org:8300/ for reviewer use. The pre-print is concurrently posted at SocArXiv (DOI to be assigned at posting).
+All primary data sources are openly available: Retraction Watch (68,870 records) and OpenAlex (479M works). The full Neo4j graph, bulk-import CSVs, classifier-validation tables, sensitivity analyses, ML-classifier weights, and a reproducing Jupyter notebook will be deposited with the manuscript. The companion code repository is at https://github.com/suanlab/palimpsest; an interactive graph-exploration platform (SciGraph Explorer) is hosted at https://scigraph.suanlab.com/ for reviewer use. The pre-print is concurrently posted at SocArXiv (DOI to be assigned at posting).
 
 ## Declarations
 

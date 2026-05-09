@@ -7,9 +7,9 @@
 Python research toolkit + React frontend + Neo4j graph database for analyzing scholarly metadata, citation networks, collaboration patterns, retraction dynamics, and AI adoption across 479M+ papers.
 
 **Live services:**
-- Frontend (static): GitHub Pages — `https://suanlab.github.io/palimpsest/`
+- Frontend (static): GitHub Pages — `https://scigraph.suanlab.com/`
 - API: `https://scigraph.suanlab.com/` (FastAPI + Neo4j)
-- Interactive exploration: `https://suanlab.github.io/palimpsest/` (queries live API)
+- Interactive exploration: `https://scigraph.suanlab.com/` (queries live API)
 
 Active research outputs:
 - Track 3 (PNAS): "Citation Palimpsests" — `docs/submissions/track3_pnas/`
@@ -203,7 +203,7 @@ curl http://127.0.0.1:8300/api/health
 When the frontend is served from GitHub Pages while the API runs on a separate origin (e.g. `scigraph.suanlab.com`), the API must explicitly list the Pages origin in `RESEARCH_CORS_ORIGINS`. The default `"*"` does **not** work because the API uses `allow_credentials=True`. Example:
 
 ```bash
-RESEARCH_CORS_ORIGINS=https://suanlab.github.io,http://localhost:3000
+RESEARCH_CORS_ORIGINS=https://scigraph.suanlab.com,http://localhost:3000
 ```
 
 Multiple origins are comma-separated. Restart the API after changing.
