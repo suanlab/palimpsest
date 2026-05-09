@@ -13,6 +13,19 @@
 # Required: router port-forwarding 80 + 443 → this host's LAN IP.
 # DNS: scigraph.suanlab.com A record → public WAN IP (already configured).
 
+# Global: disable HTTP/3.
+# Reason: HTTP/3 runs over UDP/443. The iptime router only forwards
+# TCP/80 and TCP/443; UDP/443 is not forwarded. Browsers that respect
+# the `alt-svc: h3=":443"` advertisement try QUIC on UDP/443, time out,
+# and surface as "Failed to fetch" before falling back to HTTP/2. We
+# restrict the listening protocols to h1 + h2 so no `alt-svc` header
+# is ever advertised.
+{
+    servers {
+        protocols h1 h2
+    }
+}
+
 scigraph.suanlab.com {
     # Reverse proxy to local FastAPI on port 8300
     reverse_proxy localhost:8300
