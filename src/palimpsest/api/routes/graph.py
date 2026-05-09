@@ -953,15 +953,22 @@ def get_citation_graph(
     # CRITICAL: keep `focal` in every WITH clause; otherwise it becomes
     # unbound after the first WITH and the second MATCH expands to ALL Papers,
     # returning ~400k spurious edges for hot focal papers.
+    #
+    # Also: collect IDs first (Neo4j collect() ignores nulls automatically),
+    # then build edge dicts via list comprehension. The previous form
+    # `collect({source: citing.openalex_id, ...})` produced rows with
+    # `source=null` whenever OPTIONAL MATCH didn't match, which then
+    # failed Pydantic validation downstream.
     edges_cypher: LiteralString = (
         "MATCH (focal:Paper {openalex_id: $paper_id}) "
         "OPTIONAL MATCH (focal)<-[:CITES]-(citing:Paper) "
         "WHERE citing.openalex_id IN $node_ids "
-        "WITH focal, collect(DISTINCT {source: citing.openalex_id, target: focal.openalex_id}) AS incoming "
+        "WITH focal, collect(DISTINCT citing.openalex_id) AS citingIds "
         "OPTIONAL MATCH (focal)-[:CITES]->(cited:Paper) "
         "WHERE cited.openalex_id IN $node_ids "
-        "WITH incoming, collect(DISTINCT {source: focal.openalex_id, target: cited.openalex_id}) AS outgoing "
-        "RETURN incoming + outgoing AS edges"
+        "WITH focal, citingIds, collect(DISTINCT cited.openalex_id) AS citedIds "
+        "RETURN [c IN citingIds | {source: c, target: focal.openalex_id}] + "
+        "       [c IN citedIds | {source: focal.openalex_id, target: c}] AS edges"
     )
 
     params = {"paper_id": paper_id, "limit": limit, "scan_limit": 5000}
