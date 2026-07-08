@@ -308,15 +308,15 @@ export function GraphView({
 
   const enrichedElements = useMemo(() => enrichElements(elements), [elements]);
 
-  // Fit the graph to viewport with generous padding, then zoom out ~25% more
+  // Fit the graph to viewport with generous padding, then zoom out further
   // so the initial view has breathing room rather than filling the canvas edge-
   // to-edge. Called once per layout run (either from d3 sim `end` event or from
   // cy.layout's `layoutstop` event).
   const applyInitialFit = useCallback(() => {
     const cy = getCy();
     if (!cy) return;
-    cy.fit(cy.elements(), 80);
-    cy.zoom(cy.zoom() * 0.75);
+    cy.fit(cy.elements(), 120);
+    cy.zoom(cy.zoom() * 0.55);
     cy.center();
   }, [getCy]);
 
