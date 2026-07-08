@@ -316,7 +316,7 @@ export function GraphView({
     const cy = getCy();
     if (!cy) return;
     cy.fit(cy.elements(), 120);
-    cy.zoom(cy.zoom() * 0.55);
+    cy.zoom(cy.zoom() * 0.6);
     cy.center();
   }, [getCy]);
 
@@ -364,6 +364,12 @@ export function GraphView({
         target: e.target().id(),
       }));
 
+      // Track ticks so we can continuously refit while the sim spreads the
+      // graph out, then stop once the layout is visually settled. Refitting
+      // on every tick would fight the user's pan/zoom, so we cut it off
+      // after ~90 ticks (~1.5 s at 60 fps).
+      let tickCount = 0;
+      const REFIT_TICK_LIMIT = 90;
       const sim = forceSimulation(d3Nodes)
         .force(
           "link",
@@ -385,13 +391,16 @@ export function GraphView({
               }
             });
           });
+          tickCount++;
+          // Refit on the very first tick (so the user never sees the
+          // "zoomed all the way in" state) and every 3 ticks thereafter
+          // until the layout is roughly settled.
+          if (tickCount === 1 || (tickCount <= REFIT_TICK_LIMIT && tickCount % 3 === 0)) {
+            applyInitialFit();
+          }
         });
 
-      // Fit + zoom-out once the layout is visually settled. The d3 sim runs
-      // for ~11s (alphaDecay 0.01 → alphaMin 0.001 across ~687 ticks), but
-      // positions are visually stable well before that. 1600 ms strikes a
-      // balance: nodes have finished their initial spread but the user
-      // still sees the fit happen after their eyes register the graph.
+      // Safety net: if the sim never ticks (empty graph, etc.), fit anyway.
       const fitTimer = setTimeout(applyInitialFit, 1600);
 
       simRef.current = sim;
