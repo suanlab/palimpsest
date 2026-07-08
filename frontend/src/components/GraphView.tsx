@@ -308,6 +308,18 @@ export function GraphView({
 
   const enrichedElements = useMemo(() => enrichElements(elements), [elements]);
 
+  // Fit the graph to viewport with generous padding, then zoom out ~25% more
+  // so the initial view has breathing room rather than filling the canvas edge-
+  // to-edge. Called once per layout run (either from d3 sim `end` event or from
+  // cy.layout's `layoutstop` event).
+  const applyInitialFit = useCallback(() => {
+    const cy = getCy();
+    if (!cy) return;
+    cy.fit(cy.elements(), 80);
+    cy.zoom(cy.zoom() * 0.75);
+    cy.center();
+  }, [getCy]);
+
   useEffect(() => {
     const cy = getCy();
     if (!cy || enrichedElements.length === 0) return;
@@ -375,6 +387,13 @@ export function GraphView({
           });
         });
 
+      // Fit + zoom-out once the layout is visually settled. The d3 sim runs
+      // for ~11s (alphaDecay 0.01 → alphaMin 0.001 across ~687 ticks), but
+      // positions are visually stable well before that. 1600 ms strikes a
+      // balance: nodes have finished their initial spread but the user
+      // still sees the fit happen after their eyes register the graph.
+      const fitTimer = setTimeout(applyInitialFit, 1600);
+
       simRef.current = sim;
 
       const handleGrab = (evt: cytoscape.EventObject) => {
@@ -412,6 +431,7 @@ export function GraphView({
       cy.on("dragfree", "node", handleFree);
 
       return () => {
+        clearTimeout(fitTimer);
         sim.stop();
         simRef.current = null;
         cy.off("grab", "node", handleGrab);
@@ -422,9 +442,10 @@ export function GraphView({
 
     const layoutConfig = buildLayoutConfig(layout, nodeCount);
     const runLayout = cy.layout(layoutConfig);
+    runLayout.one("layoutstop", applyInitialFit);
     runLayout.run();
     return undefined;
-  }, [layout, getCy, enrichedElements]);
+  }, [layout, getCy, enrichedElements, applyInitialFit]);
 
   useEffect(() => {
     const cy = getCy();
